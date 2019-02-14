@@ -28,7 +28,7 @@ public class CurrencyExchangeService {
 		log.info(" Inside CurrencyExchangeService.retriveExchangeValue(from,to) @param from : {} , @param to : {}",
 				from, to);
 
-		try {
+		
 
 			if (StringUtils.isBlank(from)) {
 				log.info("Invalid form parameter");
@@ -43,10 +43,6 @@ public class CurrencyExchangeService {
 			exchangeValue.setPort(Integer.parseInt(environment.getProperty("server.port")));
 			log.info("Resulted exchangeValue : {}", exchangeValue);
 			return exchangeValue;
-		} catch (Exception e) {
-			log.error("Exception occured ", e);
-			throw new InternalError("Exception occured while retriving exchangeValue");
-		}
 
 	}
 
