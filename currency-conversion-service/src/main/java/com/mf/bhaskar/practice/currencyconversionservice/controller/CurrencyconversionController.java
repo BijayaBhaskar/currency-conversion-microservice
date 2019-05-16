@@ -27,6 +27,7 @@ public class CurrencyconversionController {
 		log.info("CurrencyconversionController.convertCurrencyFeign request param  from : {} , to : {}, quantity : {} ", from, to, quantity);
 	
 		if(StringUtils.isBlank(from)) {
+			log.error("Invalid form parameter");
 			throw new IllegalArgumentException("Invalid form parameter");
 		}
 		
@@ -42,6 +43,7 @@ public class CurrencyconversionController {
 		CurrencyConversionBean response = null;
 		try {
 			response = proxy.retriveExchangeValue(from, to);
+			
 		} catch (Exception e) {
 			
 			log.error("Exception Occured  ",e);

@@ -22,13 +22,11 @@ public class CurrencyExchangeService {
 
 	@Autowired
 	private ExchangeValueRepository exchangeValueRepository;
-	
+
 	public ExchangeValue retriveExchangeValue(String from, String to) {
 
 		log.info(" Inside CurrencyExchangeService.retriveExchangeValue(from,to) @param from : {} , @param to : {}",
 				from, to);
-
-		
 		try {
 			if (StringUtils.isBlank(from)) {
 				log.info("Invalid form parameter");
@@ -62,7 +60,6 @@ public class CurrencyExchangeService {
 				throw new IllegalArgumentException("Invalid exchangeValue for update");
 
 			}
-
 			ExchangeValue exValue = exchangeValueRepository.save(exchangeValue);
 			exValue.setPort(Integer.parseInt(environment.getProperty("server.port")));
 			log.info("Resulted exchangeValue : {}", exchangeValue);
@@ -73,15 +70,14 @@ public class CurrencyExchangeService {
 		}
 
 	}
-	
+
 	public List<ExchangeValue> retriveALLExchangeValue() {
 
 		log.info(" Inside CurrencyExchangeService.retriveALLExchangeValue()");
 
 		try {
-
 			List<ExchangeValue> exchangeValues = exchangeValueRepository.findAll();
-			exchangeValues.forEach(e ->{
+			exchangeValues.forEach(e -> {
 				e.setPort(Integer.parseInt(environment.getProperty("server.port")));
 			});
 			log.info("Resulted exchangeValues : {}", exchangeValues);
@@ -98,24 +94,21 @@ public class CurrencyExchangeService {
 		log.info(" Inside CurrencyExchangeService.updateExchangeValue(exchangeValue) @param exchangeValue : {} ",
 				exchangeValue);
 		try {
-
 			if (exchangeValue == null) {
 
 				log.error("Invalid exchangeValue for update ");
 				throw new IllegalArgumentException("Invalid exchangeValue for update");
 			}
-
 			if (exchangeValue.getId() == null || exchangeValue.getId() <= 0
 					|| !exchangeValueRepository.existsById(exchangeValue.getId())) {
 
 				log.error("Invalid exchangeValue for update ");
 				throw new IllegalArgumentException("Invalid exchangeValue for update");
 			}
-
 			ExchangeValue exValue = exchangeValueRepository.save(exchangeValue);
 			exValue.setPort(Integer.parseInt(environment.getProperty("server.port")));
 			log.info("Resulted exchangeValue : {}", exchangeValue);
-			
+
 			return exValue;
 		} catch (Exception e) {
 			log.error("Exception occured ", e);
@@ -125,22 +118,20 @@ public class CurrencyExchangeService {
 	}
 
 	public void deleteExchangeValue(Long id) {
-		log.info(" Inside CurrencyExchangeService.deleteExchangeValue(id) @param id : {} ",
-				id);
-		if(id == null || id <= 0) {
+		log.info(" Inside CurrencyExchangeService.deleteExchangeValue(id) @param id : {} ", id);
+		if (id == null || id <= 0) {
 			log.error("Invalid request param");
 			throw new IllegalArgumentException("Invalid request param");
 		}
-		
+
 		try {
-			
+
 			exchangeValueRepository.deleteById(id);
 		} catch (Exception e) {
-			
+
 			log.error("Exception occured ", e);
 			throw new InternalError("Exception occured while deleting exchangeValue");
 		}
-		
-		
+
 	}
 }
